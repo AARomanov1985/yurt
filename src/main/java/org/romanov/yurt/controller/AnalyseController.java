@@ -1,5 +1,7 @@
 package org.romanov.yurt.controller;
 
+import org.romanov.yurt.analysis.dto.AnalysisDto;
+import org.romanov.yurt.analysis.facade.AnalysisFacade;
 import org.romanov.yurt.analysis.facade.FileAnalyzerFacade;
 import org.romanov.yurt.controller.dto.AnalyseRequest;
 import org.romanov.yurt.controller.dto.AnalyseResponse;
@@ -8,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +40,8 @@ public class AnalyseController {
 
     @Resource
     private FileAnalyzerFacade fileAnalyzerFacade;
+    @Resource
+    private AnalysisFacade analysisFacade;
 
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -55,10 +60,10 @@ public class AnalyseController {
         }
     }
 
-    @GetMapping
-    public void getAnalyseForId(@RequestParam long analyseId) {
-        // TODO
-        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
+    @GetMapping(value="{uid}")
+    @ResponseBody
+    public AnalysisDto getAnalyseForId(@PathVariable("uid") long uid) {
+        return analysisFacade.getAnalysisDtoForUid(uid);
     }
 
     @GetMapping("/all")

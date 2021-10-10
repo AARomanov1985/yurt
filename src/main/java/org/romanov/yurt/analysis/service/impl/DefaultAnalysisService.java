@@ -7,8 +7,10 @@ import org.romanov.yurt.analysis.service.AnalysisService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.persistence.NoResultException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Component
 public class DefaultAnalysisService implements AnalysisService {
@@ -29,4 +31,12 @@ public class DefaultAnalysisService implements AnalysisService {
     public void saveAnalysisModel(final AnalysisModel analysisModel) {
         analysisDao.save(analysisModel);
     }
+
+    @Override
+    public AnalysisModel getAnalysisModelForUid(long uid) {
+        Optional<AnalysisModel> byId = analysisDao.findById(uid);
+        return byId.orElseThrow(() -> new NoResultException("No AnalysisModel found for uid " + uid));
+    }
+
+
 }
