@@ -1,6 +1,7 @@
 package org.romanov.yurt.controller;
 
 import org.romanov.yurt.analysis.dto.AnalysisDto;
+import org.romanov.yurt.analysis.dto.ResultDto;
 import org.romanov.yurt.analysis.facade.AnalysisFacade;
 import org.romanov.yurt.analysis.facade.FileAnalyzerFacade;
 import org.romanov.yurt.controller.dto.AnalyseRequest;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.annotation.Resource;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import static java.util.Objects.isNull;
@@ -67,16 +68,16 @@ public class AnalyseController {
     }
 
     @GetMapping("/all")
-    public void getAll() {
-        // TODO
-        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
+    @ResponseBody
+    public List<AnalysisDto> getAll() {
+        return analysisFacade.getAllAnalysis();
     }
 
-    @DeleteMapping
+    @DeleteMapping(value="{uid}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteForId(@RequestParam long analyseId) {
-        // TODO
-        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
+    @ResponseBody
+    public ResultDto deleteById(@PathVariable("uid") long uid) {
+        return analysisFacade.deleteByUid(uid);
     }
 
     protected void checkURL(String url) {

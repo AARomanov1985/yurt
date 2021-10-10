@@ -1,6 +1,7 @@
 package org.romanov.yurt.analysis.service.impl;
 
 import org.romanov.yurt.analysis.dao.AnalysisDao;
+import org.romanov.yurt.analysis.dto.AnalysisDto;
 import org.romanov.yurt.analysis.model.AnalysisModel;
 import org.romanov.yurt.analysis.model.State;
 import org.romanov.yurt.analysis.service.AnalysisService;
@@ -10,6 +11,9 @@ import javax.annotation.Resource;
 import javax.persistence.NoResultException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -38,5 +42,15 @@ public class DefaultAnalysisService implements AnalysisService {
         return byId.orElseThrow(() -> new NoResultException("No AnalysisModel found for uid " + uid));
     }
 
+    @Override
+    public void deleteByUid(long uid) {
+        analysisDao.deleteById(uid);
+    }
 
+    @Override
+    public List<AnalysisModel> getAllAnalysis() {
+        List<AnalysisModel> result = new ArrayList<>();
+        analysisDao.findAll().forEach(result::add);
+        return result;
+    }
 }
