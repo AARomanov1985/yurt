@@ -43,23 +43,15 @@ Example response of the analysis result:
 
 ```json
 {
-  "id": "1",
-  // id of the analyze
-  "analyseDate": "2016-04-25T14:52:30Z[UTC]",
-  // date request came in 2015-07-14T18:39:27.757
-  "state": "Analyzing",
-  // Can be the follwing values [Analyzing, Finished, Deleting, Failed]
-  "failedSummary": "",
-  // optional text field
-  "analyseTimeInSeconds": "9",
-  // the total time it took to analyze in seconds
+  "uid": 1,
+  "analyseDate": "2021-10-10",
+  "state": "Finished",
+  "failedSummary":"",
+  "analyseTimeInSeconds": 1,
   "details": {
-    "firstPost": "2015-07-14T18:39:27.757Z[UTC]",
-    // The CreationDate value of a row the file with the lowest value (first in time)
-    "lastPost": "2015-09-14T12:46:52.053Z[UTC]",
-    // The CreationDate value of a row the file with the highest value (last in time)
+    "firstPost": "2015-07-14",
+    "lastPost": "2015-09-14",
     "totalPosts": 80,
-    // total amount unique rows
     "totalAcceptedPosts": 7,
     "avgScore": 2.98
   }
@@ -83,7 +75,7 @@ Example response of the analysis result:
     "uid": 1,
     "analyseDate": "2021-10-10",
     "state": "Finished",
-    "failedSummary": null,
+    "failedSummary": "",
     "analyseTimeInSeconds": 1,
     "details": {
       "firstPost": "2015-07-14",
@@ -97,7 +89,7 @@ Example response of the analysis result:
     "uid": 2,
     "analyseDate": "2021-10-10",
     "state": "Finished",
-    "failedSummary": null,
+    "failedSummary": "",
     "analyseTimeInSeconds": 0,
     "details": {
       "firstPost": "2015-07-14",
@@ -118,27 +110,36 @@ HTTP request example
 curl -X DELETE \
   --url 'http://localhost:8080/analyse/1' \
 ```
+
 ```json
-{"message":"success"}
+{
+  "message": "success"
+}
 ```
 
 ### Get a docker container
+
 Container is available in the docker hub:
 https://hub.docker.com/repository/docker/aaromanov1985/yurt
+
 ```
 docker pull aaromanov1985/yurt:latest
 ```
 
 ### How to run a container
+
 ```
 docker run -d -p 8080:8080 aaromanov1985/yurt:latest
 ```
+
 With RAM limit:
+
 ```
 docker run -d -p 8080:8080 -m 512m aaromanov1985/yurt:latest
 ```
 
 ### How to build a container
+
 ```
 docker build -t aaromanov1985/yurt:latest .
 ```
