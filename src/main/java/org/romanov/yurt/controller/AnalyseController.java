@@ -50,8 +50,8 @@ public class AnalyseController {
     public AnalyseResponse analyse(@RequestBody AnalyseRequest url) {
         checkURL(url.getUrl());
         try {
-            long id = fileAnalyzerFacade.analyzeFile(new URL(url.getUrl()));
-            AnalyseResponse response = new AnalyseResponse();
+            var id = fileAnalyzerFacade.analyzeFile(new URL(url.getUrl()));
+            var response = new AnalyseResponse();
             response.setId(id);
             LOG.info("returned id {}", id);
             return response;

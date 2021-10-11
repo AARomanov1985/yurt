@@ -86,8 +86,8 @@ public class DefaultAnalysisStrategy implements AnalysisStrategy {
 
     @Override
     public void calculateAnalyseTime(final AnalysisModel analysisModel) {
-        Instant start = analysisModel.getStart();
-        Instant finish = Instant.now();
+        var start = analysisModel.getStart();
+        var finish = Instant.now();
         long timeElapsed = Duration.between(start, finish).toSeconds();
         analysisModel.setAnalyseTimeInSeconds(timeElapsed);
     }

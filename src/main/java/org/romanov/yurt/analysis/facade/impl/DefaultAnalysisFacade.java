@@ -23,19 +23,19 @@ public class DefaultAnalysisFacade implements AnalysisFacade {
 
     @Override
     public AnalysisDto getAnalysisDtoForUid(long uid) {
-        AnalysisModel analysisModel = analysisService.getAnalysisModelForUid(uid);
+        var analysisModel = analysisService.getAnalysisModelForUid(uid);
         return convert(analysisModel);
     }
 
     protected AnalysisDto convert(final AnalysisModel analysisModel) {
-        AnalysisDto analysisDto = new AnalysisDto();
+        var analysisDto = new AnalysisDto();
         analysisDto.setUid(analysisModel.getUid());
         analysisDto.setAnalyseDate(analysisModel.getAnalyseDate());
         analysisDto.setState(analysisModel.getState());
         analysisDto.setFailedSummary(analysisModel.getFailedSummary());
         analysisDto.setAnalyseTimeInSeconds(analysisModel.getAnalyseTimeInSeconds());
 
-        DetailsDto detailsDto = new DetailsDto();
+        var detailsDto = new DetailsDto();
         detailsDto.setFirstPost(analysisModel.getFirstPost());
         detailsDto.setLastPost(analysisModel.getLastPost());
         detailsDto.setTotalPosts(analysisModel.getTotalPosts());
@@ -47,10 +47,10 @@ public class DefaultAnalysisFacade implements AnalysisFacade {
 
     @Override
     public List<AnalysisDto> getAllAnalysis() {
-        List<AnalysisDto> result = new ArrayList<>();
-        analysisService.getAllAnalysis()
-                .forEach(model -> result.add(convert(model)));
-        return result;
+        var models = analysisService.getAllAnalysis();
+        var dtos = new ArrayList<AnalysisDto>(models.size());
+        models.forEach(model -> dtos.add(convert(model)));
+        return dtos;
     }
 
     @Override

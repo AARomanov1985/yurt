@@ -8,9 +8,9 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class DefaultAnalysisStrategyTests {
+class DefaultAnalysisStrategyUnitTests {
 
-    private DefaultAnalysisStrategy instance = new DefaultAnalysisStrategy();
+    private final DefaultAnalysisStrategy instance = new DefaultAnalysisStrategy();
 
     /**
      * Should set firstPostDate in AnalysisModel if firstPostDate is less than
@@ -18,14 +18,13 @@ class DefaultAnalysisStrategyTests {
      */
     @Test
     public void testAnalyzeFirstPostCase1() {
-        System.out.println("teststststst");
         // given
-        LocalDate firstPostDate = LocalDate.now().minusDays(3);
+        var firstPostDate = LocalDate.now().minusDays(3);
 
-        PostData postData = new PostData();
+        var postData = new PostData();
         postData.setCreationDate(firstPostDate);
 
-        AnalysisModel analysisModel = new AnalysisModel();
+        var analysisModel = new AnalysisModel();
         analysisModel.setFirstPost(LocalDate.now());
 
         // when
@@ -42,13 +41,13 @@ class DefaultAnalysisStrategyTests {
     @Test
     public void testAnalyzeFirstPostCase2() {
         // given
-        LocalDate firstPostDateFromAnalysis = LocalDate.now().minusDays(7);
-        LocalDate firstPostDate = LocalDate.now().minusDays(1);
+        var firstPostDateFromAnalysis = LocalDate.now().minusDays(7);
+        var firstPostDate = LocalDate.now().minusDays(1);
 
-        PostData postData = new PostData();
+        var postData = new PostData();
         postData.setCreationDate(firstPostDate);
 
-        AnalysisModel analysisModel = new AnalysisModel();
+        var analysisModel = new AnalysisModel();
         analysisModel.setFirstPost(firstPostDateFromAnalysis);
 
         // when

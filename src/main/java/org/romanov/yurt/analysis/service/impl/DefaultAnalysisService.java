@@ -1,7 +1,6 @@
 package org.romanov.yurt.analysis.service.impl;
 
 import org.romanov.yurt.analysis.dao.AnalysisDao;
-import org.romanov.yurt.analysis.dto.AnalysisDto;
 import org.romanov.yurt.analysis.model.AnalysisModel;
 import org.romanov.yurt.analysis.model.State;
 import org.romanov.yurt.analysis.service.AnalysisService;
@@ -12,9 +11,8 @@ import javax.persistence.NoResultException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class DefaultAnalysisService implements AnalysisService {
@@ -24,10 +22,10 @@ public class DefaultAnalysisService implements AnalysisService {
 
     @Override
     public AnalysisModel createAnalysisModel() {
-        AnalysisModel analysis = new AnalysisModel();
+        var analysis = new AnalysisModel();
         analysis.setAnalyseDate(LocalDate.now());
         analysis.setStart(Instant.now());
-        analysis.setState(State.Analyzing);
+        analysis.setState(State.ANALYZING);
         return analysisDao.save(analysis);
     }
 
@@ -38,7 +36,7 @@ public class DefaultAnalysisService implements AnalysisService {
 
     @Override
     public AnalysisModel getAnalysisModelForUid(long uid) {
-        Optional<AnalysisModel> byId = analysisDao.findById(uid);
+        var byId = analysisDao.findById(uid);
         return byId.orElseThrow(() -> new NoResultException("No AnalysisModel found for uid " + uid));
     }
 
@@ -49,8 +47,9 @@ public class DefaultAnalysisService implements AnalysisService {
 
     @Override
     public List<AnalysisModel> getAllAnalysis() {
-        List<AnalysisModel> result = new ArrayList<>();
-        analysisDao.findAll().forEach(result::add);
+        var iterable = analysisDao.findAll();
+        var result = new ArrayList<AnalysisModel>(((Collection<?>) iterable).size());
+        iterable.forEach(result::add);
         return result;
     }
 }

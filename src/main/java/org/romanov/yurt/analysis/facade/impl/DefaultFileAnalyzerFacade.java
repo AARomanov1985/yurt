@@ -37,7 +37,7 @@ public class DefaultFileAnalyzerFacade implements FileAnalyzerFacade {
     public long analyzeFile(final URL url) {
 
         var analysisModel = analysisService.createAnalysisModel();
-        Thread thread = new Thread(() -> {
+        var thread = new Thread(() -> {
             LOG.info("Starting analysis for {}", url.getPath());
 
             try (var byteChannel = Channels.newChannel(url.openStream())) {
@@ -80,7 +80,7 @@ public class DefaultFileAnalyzerFacade implements FileAnalyzerFacade {
         if (isIoException(scanner)) {
             handleError(scanner.ioException().getMessage(), analysisModel);
         } else {
-            analysisModel.setState(State.Finished);
+            analysisModel.setState(State.FINISHED);
             analyzerStrategy.calculateAvgScore(analysisModel);
             analyzerStrategy.calculateAnalyseTime(analysisModel);
             analysisService.saveAnalysisModel(analysisModel);
@@ -90,7 +90,7 @@ public class DefaultFileAnalyzerFacade implements FileAnalyzerFacade {
 
     private void handleError(String errorMessage, final AnalysisModel analysisModel) {
         LOG.error("An exception {} occurred", errorMessage);
-        analysisModel.setState(State.Failed);
+        analysisModel.setState(State.FAILED);
         analysisModel.setFailedSummary(errorMessage);
         analysisService.saveAnalysisModel(analysisModel);
     }
