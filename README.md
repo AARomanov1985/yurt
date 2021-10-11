@@ -1,6 +1,6 @@
-# Yurt - xml analyser
+# Yurt - XML analyzer
 
-This tool is able to analyse an XML file and return basic metrics.
+This tool is able to analyze an XML file and return basic metrics.
 
 ## Usages:
 
@@ -121,3 +121,25 @@ curl -X DELETE \
 ```json
 {"message":"success"}
 ```
+
+### Get a docker container
+Container is available in the docker hub:
+https://hub.docker.com/repository/docker/aaromanov1985/yurt
+```
+docker pull aaromanov1985/yurt:latest
+```
+
+### How to run a container
+```
+docker run -d -p 8080:8080 aaromanov1985/yurt:latest
+```
+With RAM limit:
+```
+docker run -d -p 8080:8080 -m 512m aaromanov1985/yurt:latest
+```
+
+### How to build a container
+```
+docker build -t aaromanov1985/yurt:latest .
+```
+
