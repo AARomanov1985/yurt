@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.modelmapper.ModelMapper;
+import org.romanov.yurt.post.converter.ReversePostConverter;
 import org.romanov.yurt.post.data.PostData;
 import org.romanov.yurt.post.facade.PostFacade;
 import org.romanov.yurt.post.model.PostModel;
@@ -21,9 +21,9 @@ public class DefaultPostFacade implements PostFacade {
     private final ObjectMapper objectMapper;
 
     @Resource
-    private ModelMapper modelMapper;
-    @Resource
     private PostService postService;
+    @Resource
+    private ReversePostConverter reversePostConverter;
 
     public DefaultPostFacade() {
         var xmlModule = new JacksonXmlModule();
@@ -44,7 +44,7 @@ public class DefaultPostFacade implements PostFacade {
 
     @Override
     public PostModel savePostFromPostData(final PostData postData) {
-        var postModel = modelMapper.map(postData, PostModel.class);
+        var postModel = reversePostConverter.convert(postData);
         return postService.savePost(postModel);
     }
 }

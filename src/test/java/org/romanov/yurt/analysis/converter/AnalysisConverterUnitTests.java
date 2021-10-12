@@ -1,4 +1,4 @@
-package org.romanov.yurt.analysis.converter.impl;
+package org.romanov.yurt.analysis.converter;
 
 import org.junit.jupiter.api.Test;
 import org.romanov.yurt.analysis.model.AnalysisModel;
@@ -11,9 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class DefaultAnalysisConverterUnitTests {
+class AnalysisConverterUnitTests {
 
-    private final DefaultAnalysisConverter instance = new DefaultAnalysisConverter();
+    private final AnalysisConverter instance = new AnalysisConverter();
 
     @Test
     void shouldConvert() {
