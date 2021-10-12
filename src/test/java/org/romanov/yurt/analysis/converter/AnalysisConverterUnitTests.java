@@ -18,15 +18,15 @@ class AnalysisConverterUnitTests {
     @Test
     void shouldConvert() {
         // given
-        Long uid = 123L;
-        LocalDate analyseDate = LocalDate.now();
-        State state = State.FINISHED;
-        Long analyseTimeInSeconds = 3L;
-        LocalDate firstPost = LocalDate.now().minusMonths(6);
-        LocalDate lastPost = LocalDate.now().minusMonths(1);
-        Long totalPosts = 3334L;
-        Long totalAcceptedPosts = 1222L;
-        BigDecimal avgScore = BigDecimal.valueOf(2.34);
+        var uid = 123L;
+        var analyseDate = LocalDate.now();
+        var state = State.FINISHED;
+        var analyseTimeInSeconds = 3L;
+        var firstPost = LocalDate.now().minusMonths(6);
+        var lastPost = LocalDate.now().minusMonths(1);
+        var totalPosts = 3334L;
+        var totalAcceptedPosts = 1222L;
+        var avgScore = BigDecimal.valueOf(2.34);
 
         var analysisModel = mock(AnalysisModel.class);
         given(analysisModel.getUid()).willReturn(uid);
@@ -54,5 +54,22 @@ class AnalysisConverterUnitTests {
         assertEquals(totalPosts, dto.getDetails().getTotalPosts());
         assertEquals(totalAcceptedPosts, dto.getDetails().getTotalAcceptedPosts());
         assertEquals(avgScore, dto.getDetails().getAvgScore());
+    }
+
+    @Test
+    void shouldConvertWithFailedSummary() {
+        // given
+        var failedSummary = "fail";
+        var state = State.FAILED;
+        var analysisModel = mock(AnalysisModel.class);
+        given(analysisModel.getFailedSummary()).willReturn(failedSummary);
+        given(analysisModel.getState()).willReturn(state);
+
+        // when
+        var dto = instance.convert(analysisModel);
+
+        // then
+        assertEquals(state, dto.getState());
+        assertEquals(failedSummary, dto.getFailedSummary());
     }
 }

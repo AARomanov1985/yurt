@@ -39,7 +39,7 @@ class DefaultAnalysisServiceUnitTests {
     }
 
     @Test
-    public void shouldCreateAnalysisModel() {
+    void shouldCreateAnalysisModel() {
         // given
 
         // when
@@ -50,7 +50,7 @@ class DefaultAnalysisServiceUnitTests {
     }
 
     @Test
-    public void shouldSaveAnalysisModel() {
+    void shouldSaveAnalysisModel() {
         // given
         var analysisModel = mock(AnalysisModel.class);
 
@@ -62,7 +62,7 @@ class DefaultAnalysisServiceUnitTests {
     }
 
     @Test
-    public void shouldGetAnalysisModelForUid() {
+    void shouldGetAnalysisModelForUid() {
         // given
         var uid = UID;
         var analysisModel = mock(AnalysisModel.class);
@@ -76,7 +76,7 @@ class DefaultAnalysisServiceUnitTests {
     }
 
     @Test
-    public void shouldThrowExceptionIfAnalysisModelIsNotFound() {
+    void shouldThrowExceptionIfAnalysisModelIsNotFound() {
         Assertions.assertThrows(NoResultException.class, () -> {
             // given
             var uid = UID;
@@ -91,7 +91,7 @@ class DefaultAnalysisServiceUnitTests {
     }
 
     @Test
-    public void shouldDeleteByUid() {
+    void shouldDeleteByUid() {
         // given
         var uid = UID;
         var analysisModel = mock(AnalysisModel.class);
@@ -108,7 +108,7 @@ class DefaultAnalysisServiceUnitTests {
     }
 
     @Test
-    public void shouldGetAllAnalysis() {
+    void shouldGetAllAnalysis() {
         // given
         var analysisModel1 = mock(AnalysisModel.class);
         var analysisModel2 = mock(AnalysisModel.class);

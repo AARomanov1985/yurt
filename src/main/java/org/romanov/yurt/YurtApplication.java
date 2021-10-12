@@ -18,4 +18,5 @@ public class YurtApplication {
     public ModelMapper getModelMapper() {
         return new ModelMapper();
     }
+
 }
