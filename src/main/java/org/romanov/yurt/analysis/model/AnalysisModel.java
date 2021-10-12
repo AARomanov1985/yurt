@@ -2,7 +2,9 @@ package org.romanov.yurt.analysis.model;
 
 import lombok.Data;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +13,7 @@ import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -35,6 +38,8 @@ public class AnalysisModel {
     private Long totalPosts;
     private Long totalAcceptedPosts;
     private BigDecimal avgScore;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<Long> posts;
     @Transient
     private BigDecimal sumScore;
     @Transient

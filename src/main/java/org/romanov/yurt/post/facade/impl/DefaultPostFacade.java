@@ -43,8 +43,8 @@ public class DefaultPostFacade implements PostFacade {
     }
 
     @Override
-    public void savePostFromPostData(final PostData postData) {
+    public PostModel savePostFromPostData(final PostData postData) {
         var postModel = modelMapper.map(postData, PostModel.class);
-        postService.savePost(postModel);
+        return postService.savePost(postModel);
     }
 }

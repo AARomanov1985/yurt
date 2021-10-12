@@ -14,7 +14,7 @@ public class DefaultPostService implements PostService {
     private PostDao postDao;
 
     @Override
-    public void savePost(final PostModel postModel) {
-        postDao.save(postModel);
+    public PostModel savePost(final PostModel postModel) {
+        return postDao.save(postModel);
     }
 }

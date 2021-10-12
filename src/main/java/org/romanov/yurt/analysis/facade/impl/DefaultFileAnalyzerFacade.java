@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static java.util.Objects.nonNull;
@@ -25,6 +26,7 @@ import static java.util.Objects.nonNull;
 public class DefaultFileAnalyzerFacade implements FileAnalyzerFacade {
 
     private static final Logger LOG = LoggerFactory.getLogger(DefaultFileAnalyzerFacade.class);
+    public static final int OPTIMAL_CAPACITY = 10000;
 
     @Resource
     private AnalysisService analysisService;
@@ -56,30 +58,32 @@ public class DefaultFileAnalyzerFacade implements FileAnalyzerFacade {
     protected void performAnalysis(final ReadableByteChannel byteChannel, final AnalysisModel analysisModel)
             throws JsonProcessingException {
         var scanner = new Scanner(byteChannel);
+        var postsUid = new ArrayList<Long>(OPTIMAL_CAPACITY);
         while (scanner.hasNextLine() || isIoException(scanner)) {
             var xml = scanner.nextLine();
             if (postFacade.isPost(xml)) {
                 var postData = postFacade.getPostData(xml);
-                analyzePost(postData, analysisModel);
+                postsUid.add(analyzeAndSavePost(postData, analysisModel));
             }
         }
-        finishAnalysis(scanner, analysisModel);
+        finishAnalysis(scanner, analysisModel, postsUid);
     }
 
-    protected void analyzePost(final PostData postData, final AnalysisModel analysisModel) {
-        postData.setAnalysisUid(analysisModel.getUid());
+    protected long analyzeAndSavePost(final PostData postData, final AnalysisModel analysisModel) {
         analyzerStrategy.fillDetailsFromPost(postData, analysisModel);
-        postFacade.savePostFromPostData(postData);
+        return postFacade.savePostFromPostData(postData).getUid();
     }
 
     private boolean isIoException(final Scanner scanner) {
         return nonNull(scanner.ioException());
     }
 
-    protected void finishAnalysis(final Scanner scanner, final AnalysisModel analysisModel) {
+    protected void finishAnalysis(final Scanner scanner, final AnalysisModel analysisModel, final ArrayList<Long> postsUid) {
         if (isIoException(scanner)) {
             handleError(scanner.ioException().getMessage(), analysisModel);
         } else {
+            postsUid.trimToSize();
+            analysisModel.setPosts(postsUid);
             analysisModel.setState(State.FINISHED);
             analyzerStrategy.calculateAvgScore(analysisModel);
             analyzerStrategy.calculateAnalyseTime(analysisModel);

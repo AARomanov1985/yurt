@@ -8,5 +8,5 @@ import java.util.List;
 public interface AnalysisFacade {
     AnalysisDto getAnalysisDtoForUid(long uid);
     List<AnalysisDto> getAllAnalysis();
-    ResultDto deleteByUid(long uid);
+    ResultDto deleteAnalysis(long uid);
 }

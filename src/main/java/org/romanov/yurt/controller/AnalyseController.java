@@ -77,7 +77,7 @@ public class AnalyseController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public ResultDto deleteById(@PathVariable("uid") long uid) {
-        return analysisFacade.deleteByUid(uid);
+        return analysisFacade.deleteAnalysis(uid);
     }
 
     protected void checkURL(String url) {

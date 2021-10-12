@@ -1,14 +1,11 @@
 package org.romanov.yurt.post.model;
 
 import lombok.Data;
-import org.romanov.yurt.analysis.model.AnalysisModel;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.sql.Clob;
 import java.time.LocalDate;
@@ -35,6 +32,4 @@ public class PostModel {
     private Long commentCount;
     private Long favoriteCount;
     private String contentLicense;
-    @OneToOne(targetEntity = AnalysisModel.class, cascade = CascadeType.ALL)
-    private Long analysisId;
 }

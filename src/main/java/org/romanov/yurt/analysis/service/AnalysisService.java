@@ -8,6 +8,6 @@ public interface AnalysisService {
     AnalysisModel createAnalysisModel();
     void saveAnalysisModel(final AnalysisModel analysisModel);
     AnalysisModel getAnalysisModelForUid(long uid);
-    void deleteByUid(long uid);
+    void deleteAnalysis(long uid);
     List<AnalysisModel> getAllAnalysis();
 }

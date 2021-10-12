@@ -7,9 +7,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.romanov.yurt.analysis.dao.AnalysisDao;
 import org.romanov.yurt.analysis.model.AnalysisModel;
+import org.romanov.yurt.post.dao.PostDao;
 
 import javax.persistence.NoResultException;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,6 +30,8 @@ class DefaultAnalysisServiceUnitTests {
     private DefaultAnalysisService instance;
     @Mock
     private AnalysisDao analysisDao;
+    @Mock
+    private PostDao postDao;
 
     @BeforeEach
     void setUp() {
@@ -89,12 +94,17 @@ class DefaultAnalysisServiceUnitTests {
     public void shouldDeleteByUid() {
         // given
         var uid = UID;
+        var analysisModel = mock(AnalysisModel.class);
+        given(analysisDao.findById(uid)).willReturn(Optional.of(analysisModel));
+        List<Long> postsUid = Collections.singletonList(1L);
+        given(analysisModel.getPosts()).willReturn(postsUid);
 
         // when
-        instance.deleteByUid(uid);
+        instance.deleteAnalysis(uid);
 
         // then
-        verify(analysisDao).deleteById(uid);
+        verify(analysisDao).delete(analysisModel);
+        verify(postDao).deleteAllById(postsUid);
     }
 
     @Test

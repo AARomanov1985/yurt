@@ -13,7 +13,7 @@ import static org.mockito.Mockito.mock;
 
 class DefaultAnalysisConverterUnitTests {
 
-    private DefaultAnalysisConverter instance = new DefaultAnalysisConverter();
+    private final DefaultAnalysisConverter instance = new DefaultAnalysisConverter();
 
     @Test
     void shouldConvert() {
@@ -21,7 +21,6 @@ class DefaultAnalysisConverterUnitTests {
         Long uid = 123L;
         LocalDate analyseDate = LocalDate.now();
         State state = State.FINISHED;
-        String failedSummary = null;
         Long analyseTimeInSeconds = 3L;
         LocalDate firstPost = LocalDate.now().minusMonths(6);
         LocalDate lastPost = LocalDate.now().minusMonths(1);
@@ -33,7 +32,7 @@ class DefaultAnalysisConverterUnitTests {
         given(analysisModel.getUid()).willReturn(uid);
         given(analysisModel.getAnalyseDate()).willReturn(analyseDate);
         given(analysisModel.getState()).willReturn(state);
-        given(analysisModel.getFailedSummary()).willReturn(failedSummary);
+        given(analysisModel.getFailedSummary()).willReturn(null);
         given(analysisModel.getAnalyseTimeInSeconds()).willReturn(analyseTimeInSeconds);
         given(analysisModel.getFirstPost()).willReturn(firstPost);
         given(analysisModel.getLastPost()).willReturn(lastPost);

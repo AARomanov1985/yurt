@@ -9,6 +9,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class DefaultAnalysisFacade implements AnalysisFacade {
 
     public static final String SUCCESS_MESSAGE = "success";
-    public static final String ERROR_MESSAGE = "Failed due to: ";
+    public static final String ERROR_MESSAGE = "failed due to: ";
     @Resource
     private AnalysisService analysisService;
     @Resource
@@ -37,11 +38,11 @@ public class DefaultAnalysisFacade implements AnalysisFacade {
     }
 
     @Override
-    public ResultDto deleteByUid(long uid) {
+    public ResultDto deleteAnalysis(long uid) {
         try {
-            analysisService.deleteByUid(uid);
+            analysisService.deleteAnalysis(uid);
             return new ResultDto(SUCCESS_MESSAGE);
-        } catch (EmptyResultDataAccessException ex) {
+        } catch (EmptyResultDataAccessException | NoResultException ex) {
             return new ResultDto(ERROR_MESSAGE + ex.getMessage());
         }
     }

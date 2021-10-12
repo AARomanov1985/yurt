@@ -4,6 +4,7 @@ import org.romanov.yurt.analysis.dao.AnalysisDao;
 import org.romanov.yurt.analysis.model.AnalysisModel;
 import org.romanov.yurt.analysis.model.State;
 import org.romanov.yurt.analysis.service.AnalysisService;
+import org.romanov.yurt.post.dao.PostDao;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -19,6 +20,8 @@ public class DefaultAnalysisService implements AnalysisService {
 
     @Resource
     private AnalysisDao analysisDao;
+    @Resource
+    private PostDao postDao;
 
     @Override
     public AnalysisModel createAnalysisModel() {
@@ -41,8 +44,10 @@ public class DefaultAnalysisService implements AnalysisService {
     }
 
     @Override
-    public void deleteByUid(long uid) {
-        analysisDao.deleteById(uid);
+    public void deleteAnalysis(long uid) {
+        var model = getAnalysisModelForUid(uid);
+        postDao.deleteAllById(model.getPosts());
+        analysisDao.delete(model);
     }
 
     @Override

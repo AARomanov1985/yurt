@@ -41,6 +41,4 @@ public class PostData {
     private Long favoriteCount;
     @JacksonXmlProperty(localName = "ContentLicense")
     private String contentLicense;
-
-    private Long analysisUid;
 }
